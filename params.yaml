@@ -1,0 +1,8 @@
+config:
+  input_dim: 4
+  output_dim: 3
+  h_dim: 5
+
+train:
+  learning_rate: 0.001
+  num_epochs: 100
