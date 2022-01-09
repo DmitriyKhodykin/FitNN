@@ -74,6 +74,7 @@ class NeuralNetwork:
                 correct = correct + 1
         accuracy = correct / len(self.dataset)
         print('Accuracy:', accuracy)
+        return accuracy
 
     def display_result(self):
         plt.plot(self.los_arr)
