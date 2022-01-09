@@ -5,7 +5,7 @@ import yaml
 from service_functions import *
 
 
-class FitNN:
+class NeuralNetwork:
 
     def __init__(self, dataset):
         self.dataset = dataset
@@ -75,12 +75,13 @@ class FitNN:
         accuracy = correct / len(self.dataset)
         print('Accuracy:', accuracy)
 
-    def display_plot(self):
+    def display_result(self):
         plt.plot(self.los_arr)
         plt.show()
 
 
 if __name__ == '__main__':
+    # Dataset
     iris = datasets.load_iris()
     data = [
         (
@@ -90,7 +91,8 @@ if __name__ == '__main__':
             len(iris.target)
         )
     ]
-    fit = FitNN(data)
-    fit.train()
-    fit.calc_accuracy()
-    fit.display_plot()
+    # NN Instance
+    neural_network = NeuralNetwork(data)
+    neural_network.train()
+    neural_network.calc_accuracy()
+    neural_network.display_result()
