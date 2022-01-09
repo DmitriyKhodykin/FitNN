@@ -4,78 +4,93 @@ import yaml
 
 from service_functions import *
 
-with open(r'params.yaml') as file:
-    params = yaml.full_load(file)
 
-iris = datasets.load_iris()
-dataset = [
-    (
-        iris.data[i][None, ...],
-        iris.target[i]
-    ) for i in range(
-        len(iris.target)
-    )
-]
+class FitNN:
 
-w1 = numpy.random.randn(params['config']['input_dim'], params['config']['h_dim'])
-b1 = numpy.random.randn(1, params['config']['h_dim'])
+    def __init__(self, dataset):
+        self.dataset = dataset
 
-w2 = numpy.random.randn(params['config']['h_dim'], params['config']['output_dim'])
-b2 = numpy.random.randn(1, params['config']['output_dim'])
+        with open(r'params.yaml') as file:
+            self.params = yaml.full_load(file)
 
-los_arr = []
+        self.input_dim = self.params['config']['input_dim']
+        self.h_dim = self.params['config']['h_dim']
+        self.output_dim = self.params['config']['output_dim']
 
-for epoch in range(params['train']['num_epochs']):
-    for i in range(len(dataset)):
+        self.weights_matrix_1 = numpy.random.randn(self.input_dim, self.h_dim)
+        self.bias_vector_1 = numpy.random.randn(1, self.h_dim)
 
-        x, y = dataset[i]
+        self.weights_matrix_2 = numpy.random.randn(self.h_dim, self.output_dim)
+        self.bias_vector_2 = numpy.random.randn(1, self.output_dim)
 
-        # Forward
-        t1 = x @ w1 + b1
+        self.los_arr = []
+
+    def train(self):
+        learning_rate = self.params['train']['learning_rate']
+        num_epochs = self.params['train']['num_epochs']
+
+        for epoch in range(num_epochs):
+            for i in range(len(self.dataset)):
+                x, y = self.dataset[i]
+
+                # Forward
+                t1 = x @ self.weights_matrix_1 + self.bias_vector_1
+                h1 = relu(t1)
+                t2 = h1 @ self.weights_matrix_2 + self.bias_vector_2
+                z = softmax(t2)
+                error = sparse_cross_entropy(z, y)
+
+                # Backward
+                y_full = to_full(y, self.output_dim)
+                de_dt2 = z - y_full
+                de_dw2 = h1.T @ de_dt2
+                de_db2 = de_dt2
+                de_dh1 = de_dt2 @ self.weights_matrix_2.T
+                de_dt1 = de_dh1 * relu_deriv(t1)
+                de_dw1 = x.T @ de_dt1
+                de_db1 = de_dt1
+
+                # Update
+                self.weights_matrix_1 = self.weights_matrix_1 - learning_rate * de_dw1
+                self.bias_vector_1 = self.bias_vector_1 - learning_rate * de_db1
+                self.weights_matrix_2 = self.weights_matrix_2 - learning_rate * de_dw2
+                self.bias_vector_2 = self.bias_vector_2 - learning_rate * de_db2
+
+                self.los_arr.append(error)
+
+    def predict(self, x):
+        t1 = x @ self.weights_matrix_1 + self.bias_vector_1
         h1 = relu(t1)
-        t2 = h1 @ w2 + b2
+        t2 = h1 @ self.weights_matrix_2 + self.bias_vector_2
         z = softmax(t2)
-        error = sparse_cross_entropy(z, y)
+        return z
 
-        # Backward
-        y_full = to_full(y, params['config']['output_dim'])
-        dE_dt2 = z - y_full
-        dE_dW2 = h1.T @ dE_dt2
-        dE_db2 = dE_dt2
-        dE_dh1 = dE_dt2 @ w2.T
-        dE_dt1 = dE_dh1 * relu_deriv(t1)
-        dE_dW1 = x.T @ dE_dt1
-        dE_db1 = dE_dt1
+    def calc_accuracy(self):
+        correct = 0
+        for x, y in self.dataset:
+            z = self.predict(x)
+            y_predicted = numpy.argmax(z)
+            if y_predicted == y:
+                correct = correct + 1
+        accuracy = correct / len(self.dataset)
+        print('Accuracy:', accuracy)
 
-        # Update
-        w1 = w1 - params['train']['learning_rate'] * dE_dW1
-        b1 = b1 - params['train']['learning_rate'] * dE_db1
-        w2 = w2 - params['train']['learning_rate'] * dE_dW2
-        b2 = b2 - params['train']['learning_rate'] * dE_db2
-
-        los_arr.append(error)
+    def display_plot(self):
+        plt.plot(self.los_arr)
+        plt.show()
 
 
-def predict(x):
-    t1 = x @ w1 + b1
-    h1 = relu(t1)
-    t2 = h1 @ w2 + b2
-    z = softmax(t2)
-    return z
-
-
-def calc_accuracy():
-    correct = 0
-    for x, y in dataset:
-        z = predict(x)
-        y_pred = numpy.argmax(z)
-        if y_pred == y:
-            correct = correct + 1
-    accuracy = correct / len(dataset)
-    return accuracy
-
-
-accuracy = calc_accuracy()
-print("Accuracy:", accuracy)
-plt.plot(los_arr)
-plt.show()
+if __name__ == '__main__':
+    iris = datasets.load_iris()
+    data = [
+        (
+            iris.data[i][None, ...],
+            iris.target[i]
+        ) for i in range(
+            len(iris.target)
+        )
+    ]
+    fit = FitNN(data)
+    fit.train()
+    fit.calc_accuracy()
+    fit.display_plot()

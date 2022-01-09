@@ -20,7 +20,6 @@ def softmax(tensor):
 
 def sparse_cross_entropy(z, y):
     """
-
     :param z: Predicted class vector
     :param y: True class vector
     :return:
