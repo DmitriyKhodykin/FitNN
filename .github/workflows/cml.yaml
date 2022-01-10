@@ -18,3 +18,4 @@ jobs:
           pip install -r requirements.txt
           # DVC workflow from dvc.yaml file
           dvc repro
+          dvc exp show

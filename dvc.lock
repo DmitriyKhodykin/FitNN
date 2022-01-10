@@ -19,11 +19,8 @@ stages:
     params:
       params.yaml:
         train.learning_rate: 0.001
-        train.num_epochs: 300
+        train.num_epochs: 200
     outs:
     - path: log.csv
-      md5: e13dc7bb477e9ba85dad240f95acb7d7
+      md5: 38b9a2a072d1437b8e96974ddc67cd8a
       size: 40
-    - path: pics/los_arr.png
-      md5: e537dbc5e8db445453546053906eaeda
-      size: 14872
