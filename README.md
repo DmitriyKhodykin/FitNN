@@ -2,4 +2,4 @@
 
 ![](pics/los_arr.png)
 
-[: metrics](log.csv) [: params](params.yaml)
+[Metrics](log.csv) | [Params](params.yaml)
