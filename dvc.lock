@@ -11,12 +11,16 @@ stages:
         train.learning_rate: 0.001
         train.num_epochs: 100
   evaluate:
-    cmd: python src\evaluate.py
+    cmd: python src/evaluate.py
     deps:
-    - path: src\evaluate.py
+    - path: src/evaluate.py
       md5: 22b11fbd0ea47362e4ee854d72eaaa8c
       size: 566
     params:
       params.yaml:
         train.learning_rate: 0.001
-        train.num_epochs: 300
+        train.num_epochs: 400
+    outs:
+    - path: log.csv
+      md5: 6d91acd95dd2d290507a907eaa177b49
+      size: 40
