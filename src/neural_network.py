@@ -77,4 +77,4 @@ class NeuralNetwork:
 
     def display_result(self):
         plt.plot(self.los_arr)
-        plt.show()
+        plt.savefig('pics/los_arr.png')

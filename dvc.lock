@@ -14,13 +14,16 @@ stages:
     cmd: python src/evaluate.py
     deps:
     - path: src/evaluate.py
-      md5: 43ec3beae25636634f10f710d12623d0
-      size: 422
+      md5: d361a1d65fc077f371413fa4cc0742ec
+      size: 429
     params:
       params.yaml:
         train.learning_rate: 0.001
         train.num_epochs: 300
     outs:
     - path: log.csv
-      md5: 5aaa32acec24f76f4e685f704a18f125
-      size: 26
+      md5: e13dc7bb477e9ba85dad240f95acb7d7
+      size: 40
+    - path: pics/los_arr.png
+      md5: e537dbc5e8db445453546053906eaeda
+      size: 14872

@@ -11,6 +11,7 @@ if __name__ == '__main__':
     # NN Instance
     neural_network = NeuralNetwork(data)
     neural_network.train()
+    neural_network.display_result()
     accuracy = neural_network.calc_accuracy()
 
     with open("log.csv", "w") as fd:
