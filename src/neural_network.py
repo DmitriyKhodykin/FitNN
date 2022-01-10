@@ -1,4 +1,3 @@
-from sklearn import datasets
 import matplotlib.pyplot as plt
 import yaml
 
@@ -79,21 +78,3 @@ class NeuralNetwork:
     def display_result(self):
         plt.plot(self.los_arr)
         plt.show()
-
-
-if __name__ == '__main__':
-    # Dataset
-    iris = datasets.load_iris()
-    data = [
-        (
-            iris.data[i][None, ...],
-            iris.target[i]
-        ) for i in range(
-            len(iris.target)
-        )
-    ]
-    # NN Instance
-    neural_network = NeuralNetwork(data)
-    neural_network.train()
-    neural_network.calc_accuracy()
-    neural_network.display_result()

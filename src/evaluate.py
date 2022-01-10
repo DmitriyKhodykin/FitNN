@@ -1,20 +1,13 @@
 import json
-from sklearn import datasets
 
 from neural_network import NeuralNetwork
+from prepare import get_data
 
 
 if __name__ == '__main__':
     # Dataset
-    iris = datasets.load_iris()
-    data = [
-        (
-            iris.data[i][None, ...],
-            iris.target[i]
-        ) for i in range(
-            len(iris.target)
-        )
-    ]
+    data = get_data()
+
     # NN Instance
     neural_network = NeuralNetwork(data)
     neural_network.train()
