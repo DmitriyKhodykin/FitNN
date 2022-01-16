@@ -9,3 +9,5 @@ stages:
     metrics:
       - log.csv:
           cache: false
+      - classes.csv:
+          cache: false

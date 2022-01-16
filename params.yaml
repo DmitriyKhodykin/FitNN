@@ -4,5 +4,5 @@ config:
   h_dim: 5
 
 train:
-  learning_rate: 0.001
+  learning_rate: 0.0015
   num_epochs: 350

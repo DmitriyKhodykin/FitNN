@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import pandas
 import yaml
 
 from service_functions import *
@@ -74,6 +75,19 @@ class NeuralNetwork:
         accuracy = correct / len(self.dataset)
         print('Accuracy:', accuracy)
         return accuracy
+
+    def calc_matrix(self) -> pandas.DataFrame:
+        y_true = []
+        y_pred = []
+        for x, y in self.dataset:
+            y_true.append(y)
+            z = self.predict(x)
+            y_pred.append(numpy.argmax(z))
+        result = pandas.DataFrame({
+            'actual': y_true,
+            'predicted': y_pred
+        })
+        return result
 
     def display_result(self):
         plt.plot(self.los_arr)
