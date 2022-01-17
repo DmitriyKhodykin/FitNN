@@ -18,4 +18,4 @@ jobs:
           pip install -r requirements.txt
           # DVC workflow from dvc.yaml file
           dvc repro
-          dvc plots show
+          imgkit.from_file('dvc_plots/index.html', 'pics/conf.png')
