@@ -27,3 +27,9 @@ stages:
     - path: log.csv
       md5: 7b3d1feaec0e920ab141dab5b7e010b1
       size: 40
+  post:
+    cmd: python src/post_processing.py
+    deps:
+    - path: src/post_processing.py
+      md5: 84fdc5095b0946cbbf5ff1fe54c28239
+      size: 121

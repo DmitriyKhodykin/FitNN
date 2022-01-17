@@ -15,3 +15,8 @@ stages:
           template: confusion
           x: actual
           y: predicted
+
+  post:
+    cmd: python src/post_processing.py
+    deps:
+      - src/post_processing.py

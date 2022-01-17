@@ -1,3 +1,3 @@
 ## Fit Neural Network
 
-![](pics/conf.png)
+![](conf.png)
