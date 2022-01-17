@@ -14,16 +14,16 @@ stages:
     cmd: python src/evaluate.py
     deps:
     - path: src/evaluate.py
-      md5: 041114b6d490af20246b243dd014736b
-      size: 523
+      md5: dcc9aad17cc14793643c34cb8f242832
+      size: 554
     params:
       params.yaml:
         train.learning_rate: 0.0015
-        train.num_epochs: 350
+        train.num_epochs: 400
     outs:
     - path: classes.csv
-      md5: 8fa72899fb365fa1b134461c059f105b
-      size: 1259
+      md5: f4e3da73d6774d1f8ae585e02f3f5bb8
+      size: 768
     - path: log.csv
       md5: 7b3d1feaec0e920ab141dab5b7e010b1
       size: 40

@@ -9,5 +9,9 @@ stages:
     metrics:
       - log.csv:
           cache: false
+    plots:
       - classes.csv:
           cache: false
+          template: confusion
+          x: actual
+          y: predicted

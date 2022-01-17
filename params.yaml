@@ -5,4 +5,4 @@ config:
 
 train:
   learning_rate: 0.0015
-  num_epochs: 350
+  num_epochs: 400

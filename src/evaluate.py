@@ -14,9 +14,9 @@ if __name__ == '__main__':
     neural_network.train()
     neural_network.display_result()
     accuracy = neural_network.calc_accuracy()
-    result = neural_network.calc_matrix()
+    result: pandas.DataFrame = neural_network.calc_matrix()
 
     with open("log.csv", "w") as fd:
         json.dump({"accuracy": accuracy}, fd, indent=4)
 
-    result.to_csv("classes.csv")
+    result.to_csv("classes.csv", index=False)
